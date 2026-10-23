@@ -2,6 +2,11 @@
 
 public class Principal {
     public static void main(String[] args){
+        Controle ctl = new Controle();
 
+        ctl.cadItem();
+        ctl.cadItem();
+
+        ctl.listarItens();
     }
 }
