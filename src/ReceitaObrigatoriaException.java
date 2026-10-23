@@ -1,8 +1,8 @@
 // Ricardo Augusto Scalada Mercante RA: a2865483
 
-public class ReceitaObrigatoriaExcepetion extends Exception{
+public class ReceitaObrigatoriaException extends Exception{
 
-    public ReceitaObrigatoriaExcepetion(){
+    public ReceitaObrigatoriaException(){
         super("Erro: Receita obrigatoria.");
     }
 }
