@@ -25,7 +25,7 @@ public class Cosmetico extends ItemFarmacia{
     public void setFragrancia(String fragrancia) {
         this.fragrancia = fragrancia;
     }
-    // Sobrescrita
+    //Sobrescrita
     public String toString() {
         return super.toString() + " | Tipo pele: "+tipoPele+" | Fragrancia: "+fragrancia;
     }

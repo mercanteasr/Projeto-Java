@@ -9,7 +9,7 @@ public class AparelhoMedico extends ItemFarmacia{
         voltagem = "";
         garantiaMeses = 0;
     }
-    // Getterrs e Setters
+    // Getters e Setters
     public String getVoltagem() {
         return voltagem;
     }
@@ -25,7 +25,7 @@ public class AparelhoMedico extends ItemFarmacia{
     public void setGarantiaMeses(int garantiaMeses) {
         this.garantiaMeses = garantiaMeses;
     }
-    // Sobrescrita
+    //Sobrescrita
     public String toString(){
         return super.toString() + " | Voltagem: "+voltagem+" | Garantia Meses: "+garantiaMeses;
     }

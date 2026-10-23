@@ -25,7 +25,7 @@ public class Remedio extends ItemFarmacia{
     public void setDosagem(String dosagem) {
         this.dosagem = dosagem;
     }
-    // Sobrescrita
+    //Sobrescrita
     public String toString(){
         return super.toString() + " | Principio Ativo: "+principioAtivo+" | Dosagem: "+dosagem;
     }

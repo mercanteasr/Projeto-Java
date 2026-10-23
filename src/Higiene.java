@@ -25,8 +25,8 @@ public class Higiene extends ItemFarmacia{
     public void setPublicoAlvo(String publicoAlvo) {
         this.publicoAlvo = publicoAlvo;
     }
-    // Sobrescrita
+    //Sobrescrita
     public String toString() {
-        return super.toString() + " | Unidades por Pacote: "+unidadesPorPacote+" | Publico Alvo:"+publicoAlvo;
+        return super.toString() + " | Unidades por Pacote: "+unidadesPorPacote+" | Publico Alvo: "+publicoAlvo;
     }
 }
