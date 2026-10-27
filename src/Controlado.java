@@ -30,6 +30,6 @@ public class Controlado extends Remedio{
 
     @Override
     public String toString() {
-        return super.toString() + " | Tarja: "+ tarja;
+        return super.toString() + "\n | Tarja: "+ tarja;
     }
 }

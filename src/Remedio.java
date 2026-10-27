@@ -27,6 +27,6 @@ public class Remedio extends ItemFarmacia{
     }
     //Sobrescrita
     public String toString(){
-        return super.toString() + " | Principio Ativo: "+principioAtivo+" | Dosagem: "+dosagem;
+        return super.toString() + "\n | Principio Ativo: "+principioAtivo+"\n | Dosagem: "+dosagem;
     }
 }

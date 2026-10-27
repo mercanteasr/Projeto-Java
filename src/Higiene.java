@@ -27,6 +27,6 @@ public class Higiene extends ItemFarmacia{
     }
     //Sobrescrita
     public String toString() {
-        return super.toString() + " | Unidades por Pacote: "+unidadesPorPacote+" | Publico Alvo: "+publicoAlvo;
+        return super.toString() + "\n | Unidades por Pacote: "+unidadesPorPacote+"\n | Publico Alvo: "+publicoAlvo;
     }
 }

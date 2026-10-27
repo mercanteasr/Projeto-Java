@@ -27,6 +27,6 @@ public class Cosmetico extends ItemFarmacia{
     }
     //Sobrescrita
     public String toString() {
-        return super.toString() + " | Tipo pele: "+tipoPele+" | Fragrancia: "+fragrancia;
+        return super.toString() + "\n | Tipo pele: "+tipoPele+"\n | Fragrancia: "+fragrancia;
     }
 }

@@ -47,6 +47,6 @@ public class ItemFarmacia {
     }
     //Sobrescrita
     public String toString(){
-        return "Nome: "+nome+" | Marca: "+marca+" | Preço: "+preco+" | Quantidade Estoque: "+qtdEstoque;
+        return "Nome: "+nome+"\n | Marca: "+marca+"\n | Preço: "+preco+"\n | Quantidade Estoque: "+qtdEstoque;
     }
 }
