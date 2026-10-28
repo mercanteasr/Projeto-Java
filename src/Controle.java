@@ -259,7 +259,7 @@ public class Controle {
     public int lerInt(String rotulo) {
         while (true) {
             try {
-                return Integer.parseInt(lerTexto(rotulo).trim());
+                return Integer.parseInt(lerTexto(rotulo));
             } catch (NumberFormatException nfe) {
                 System.out.println("Valor invalido, digite apenas numeros!");
             }
@@ -270,7 +270,7 @@ public class Controle {
     private double lerDouble(String rotulo) {
         while (true) {
             try {
-                return Double.parseDouble(lerTexto(rotulo).trim());
+                return Double.parseDouble(lerTexto(rotulo));
             } catch (NumberFormatException nfe) {
                 System.out.println("Valor invalido, digite apenas numeros!");
             }
@@ -301,14 +301,18 @@ public class Controle {
         }
     }
 
-    // le um preco maior que 0
+    // le um preco maior que 0 e finito
     private double lerPreco(String rotulo){
         while (true){
             double precoCI = lerDouble(rotulo);
-            if(precoCI > 0){
+            if(precoCI > 0 && Double.isFinite(precoCI)){
                 return precoCI;
-            }else{
-                System.out.println("deve ser maior que 0");
+            }else if(precoCI <= 0){
+                System.out.println("O numero deve ser maior que zero");
+            } else if (Double.isInfinite(precoCI)) {
+                System.out.println("O numero deve ser finito!");
+            } else {
+                System.out.println("Valor invalido!");
             }
         }
     }
@@ -324,15 +328,15 @@ public class Controle {
             }
         }
     }
-    // le um texto
+    // le um texto que nao pode ser vazio
     private String lerTexto(String rotulo){
         while (true){
-            String lTex = l.entDados(rotulo).trim();
-            if(lTex.isEmpty()){
-                System.out.println("String vazia, incorreta!");
+            String tex = l.entDados(rotulo).trim();
+            if(!tex.isEmpty()){
+                return tex;
             }
             else {
-                return lTex;
+                System.out.println("Campo obrigatorio, digite algo!");
             }
         }
     }
