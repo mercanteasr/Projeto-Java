@@ -25,10 +25,8 @@ public class Controlado extends Remedio{
     public void setReceitaApresentada(boolean receitaApresentada) {
         this.receitaApresentada = receitaApresentada;
     }
-    //Sobrescrita
 
-
-    @Override
+    // Sobrescrita
     public String toString() {
         return super.toString() + "\n | Tarja: "+ tarja;
     }

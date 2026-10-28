@@ -1,32 +1,80 @@
 // Ricardo Augusto Scalada Mercante RA: a2865483
 
 import java.util.ArrayList;
+
 public class Controle {
-    // inicialização de objeto
+
+    // ==================== ATRIBUTOS ====================
+
     private Leitura l = new Leitura();
-    private boolean rodar = true;
 
     private ArrayList<ItemFarmacia> itens;
     private ArrayList<Cliente> clientes;
     private ArrayList<Venda> vendas;
 
-    // Construtor
+    // ==================== CONSTRUTOR ====================
+
     public Controle() {
         this.itens = new ArrayList<>();
         this.clientes = new ArrayList<>();
         this.vendas = new ArrayList<>();
     }
 
-    // Metodo auxiliar de cadItem
-    public void preencherComum(ItemFarmacia item) {
-        item.setNome(l.entDados("Nome do Item: "));
-        item.setMarca(l.entDados("Marca Item: "));
-        item.setPreco(lerPreco("Preço (ex: 5.99, use ponto): "));
-        item.setQtdEstoque(lerQuantidade("Quantidade Estoque Item (número inteiro, ex: 12): "));
+    // ==================== MENUS ====================
+
+    public void cadastrar(){
+        System.out.println("\n== MENU DE CADASTRO== ");
+        System.out.println("1) Cadastro Cliente");
+        System.out.println("2) Cadastro Item");
+        System.out.println("0) Voltar (Menu)");
+        int opcao = lerInt("Opção: ");
+
+        switch (opcao){
+            case 0:
+                System.out.println("Retornando...");
+                return;
+            case 1:
+                cadCliente();
+                break;
+            case 2:
+                cadItem();
+                break;
+            default:
+                System.out.println("Digite um numero correspondente ao menu acima!");
+                break;
+        }
     }
 
-    // Metodos
-    public void cadItem(){
+    public void listar(){
+        System.out.println("\n== MENU DE ESCOLHA DE LISTAS == ");
+        System.out.println("1) Clientes");
+        System.out.println("2) Itens");
+        System.out.println("3) Vendas");
+        System.out.println("0) Voltar (Menu)");
+        int opcao = lerInt("Opção: ");
+
+        switch (opcao){
+            case 0:
+                System.out.println("Retornando...");
+                return;
+            case 1:
+                listarClientes();
+                break;
+            case 2:
+                listarItens();
+                break;
+            case 3:
+                listarVendas();
+                break;
+            default:
+                System.out.println("Digite um numero correspondente ao menu acima!");
+                break;
+        }
+    }
+
+    // ==================== CADASTROS ====================
+
+    private void cadItem(){
         Remedio rem;
         Controlado con;
         Cosmetico cos;
@@ -93,7 +141,15 @@ public class Controle {
         }
     }
 
-    public void cadCliente() {
+    // preenche os dados que todo item tem (herdados de ItemFarmacia)
+    private void preencherComum(ItemFarmacia item) {
+        item.setNome(l.entDados("Nome do Item: "));
+        item.setMarca(l.entDados("Marca Item: "));
+        item.setPreco(lerPreco("Preço (ex: 5.99, use ponto): "));
+        item.setQtdEstoque(lerQuantidade("Quantidade Estoque Item (número inteiro, ex: 12): "));
+    }
+
+    private void cadCliente() {
         Cliente cl = new Cliente();
         System.out.println("\n== CADASTRO CLIENTES ==");
         cl.setNome(l.entDados("Nome do Cliente: "));
@@ -103,70 +159,8 @@ public class Controle {
         System.out.println("Cliente cadastrado com sucesso!");
     }
 
-    // Metodo auxiliar pra leitura de número com tratamento
-    public int lerPosicao(String rotulo, int tamanho){
-        while (true){
-            int posCI = lerInt(rotulo);
-            if(posCI >= 1 && posCI <= tamanho){
-                return posCI - 1;
-            }else{
-                System.out.println("Numero invalido");
-            }
-        }
-    }
-    // Metodo auxiliar pra leitura de número com tratamento
-    public int lerQuantidade(String rotulo){
-        while (true){
-            int qtdCI = lerInt(rotulo);
-            if(qtdCI > 0){
-                return qtdCI;
-            }else{
-                System.out.println("deve ser maior que 0");
-            }
-        }
-    }
-    // Metodo auxiliar pra leitura de número com tratamento
-    public double lerPreco(String rotulo){
-        while (true){
-            double precoCI = lerDouble(rotulo);
-            if(precoCI > 0){
-                return precoCI;
-            }else{
-                System.out.println("deve ser maior que 0");
-            }
-        }
-    }
-    // Metodo auxiliar pra leitura de número com tratamento
-    public double lerDesconto(String rotulo){
-        while (true){
-            double descCI = lerDouble(rotulo);
-            if(descCI >= 0 && descCI <= 100){
-                return descCI;
-            }else{
-                System.out.println("deve ser de 0 a 100");
-            }
-        }
-    }
-    //Metodo auxiliar pra leitura de número com tratamento
-    public int lerInt(String rotulo) {
-        while (true) {
-            try {
-                return Integer.parseInt(l.entDados(rotulo));
-            } catch (NumberFormatException nfe) {
-                System.out.println("Valor invalido, digite apenas numeros!");
-            }
-        }
-    }
-    // Metodo auxiliar pra leitura de número com tratamento
-    public double lerDouble(String rotulo) {
-        while (true) {
-            try {
-                return Double.parseDouble(l.entDados(rotulo));
-            } catch (NumberFormatException nfe) {
-                System.out.println("Valor invalido, digite apenas numeros!");
-            }
-        }
-    }
+    // ==================== VENDA ====================
+
     public void registrarVenda() {
         if (clientes.isEmpty() || itens.isEmpty()) {
             System.out.println("Cadastre pelo menos um cliente e um item antes de registrar uma venda");
@@ -178,15 +172,17 @@ public class Controle {
             ven.setCliente(clientes.get(lerPosicao("\nNumero do Cliente: ", clientes.size())));
             listarItens();
             ven.setItem(itens.get(lerPosicao("\nNumero do Item: ", itens.size())));
-            ven.setQuantidade(lerQuantidade("Quantidade: "));
+            ven.setQuantidade(lerQuantidade("Quantidade (Numero inteiro): "));
             verEstoque(ven.getItem(), ven.getQuantidade());
 
+            // so remedio controlado precisa de receita
             if (ven.getItem() instanceof Controlado) {
                 Controlado con = (Controlado) ven.getItem();
                 String aReceita = l.entDados("Apresentou receita? (S/N): ");
                 con.setReceitaApresentada(aReceita.equalsIgnoreCase("S"));
                 verReceita(con);
             }
+            // so chega aqui se passou nas duas verificacoes
             ven.getItem().setQtdEstoque(ven.getItem().getQtdEstoque() - ven.getQuantidade()); //Reflexividade
             vendas.add(ven);
             double desc = lerDesconto("Desconto em % (ex: 10 para 10%): ");
@@ -200,19 +196,23 @@ public class Controle {
         }
     }
 
-    public void verEstoque(ItemFarmacia item, int qtd) throws EstoqueInsuficienteException {
+    // lanca excecao se o estoque nao tiver a quantidade pedida
+    private void verEstoque(ItemFarmacia item, int qtd) throws EstoqueInsuficienteException {
         if (item.getQtdEstoque() < qtd) {
             throw new EstoqueInsuficienteException();
         }
     }
 
-    public void verReceita(Controlado con) throws ReceitaObrigatoriaException {
+    // lanca excecao se a receita do controlado nao foi apresentada
+    private void verReceita(Controlado con) throws ReceitaObrigatoriaException {
         if (!con.isReceitaApresentada()) {
             throw new ReceitaObrigatoriaException();
         }
     }
 
-    public void listarItens() {
+    // ==================== RELATORIOS ====================
+
+    private void listarItens() {
         if (itens.isEmpty()) {
             System.out.println("Cadastre um item antes de ver a lista de itens");
             return; // sai do metodo
@@ -223,7 +223,8 @@ public class Controle {
             System.out.println(itens.get(i).toString()+"\n");
         }
     }
-    public void listarClientes() {
+
+    private void listarClientes() {
         if (clientes.isEmpty()) {
             System.out.println("Cadastre um cliente antes de ver a lista de clientes");
             return; // sai do metodo
@@ -237,7 +238,7 @@ public class Controle {
         }
     }
 
-    public void listarVendas() {
+    private void listarVendas() {
         if (vendas.isEmpty()) {
             System.out.println("Registre uma venda antes de ver a lista de vendas");
             return; // sai do metodo
@@ -252,49 +253,75 @@ public class Controle {
         }
     }
 
-    // Metodo do menu listar
-    public void listar(){
-        System.out.println("\n== MENU DE ESCOLHA DE LISTAS == ");
-        System.out.println("1) Clientes");
-        System.out.println("2) Itens");
-        System.out.println("3) Vendas");
-        int opcao = lerInt("Opção: ");
+    // ==================== LEITURA COM TRATAMENTO ====================
 
-        switch (opcao){
-            case 1:
-                listarClientes();
-                break;
-            case 2:
-                listarItens();
-                break;
-            case 3:
-                listarVendas();
-                break;
-            default:
-                System.out.println("Digite um numero correspondente ao menu acima!");
-                break;
+    // le um inteiro; se digitar letra, pergunta de novo
+    public int lerInt(String rotulo) {
+        while (true) {
+            try {
+                return Integer.parseInt(l.entDados(rotulo));
+            } catch (NumberFormatException nfe) {
+                System.out.println("Valor invalido, digite apenas numeros!");
+            }
         }
     }
 
-    public void cadastrar(){
-        System.out.println("\n== MENU DE CADASTRO== ");
-        System.out.println("1) Cadastro Cliente");
-        System.out.println("2) Cadastro Item");
-        int opcao = lerInt("Opção: ");
+    // le um numero com casas decimais; se digitar letra, pergunta de novo
+    private double lerDouble(String rotulo) {
+        while (true) {
+            try {
+                return Double.parseDouble(l.entDados(rotulo));
+            } catch (NumberFormatException nfe) {
+                System.out.println("Valor invalido, digite apenas numeros!");
+            }
+        }
+    }
 
-        switch (opcao){
-            case 0:
-                System.out.println("Saindo...");
-                return;
-            case 1:
-                cadCliente();
-                break;
-            case 2:
-                cadItem();
-                break;
-            default:
-                System.out.println("Digite um numero correspondente ao menu acima!");
-                break;
+    // le o numero mostrado na lista e devolve a posicao no ArrayList
+    private int lerPosicao(String rotulo, int tamanho){
+        while (true){
+            int posCI = lerInt(rotulo);
+            if(posCI >= 1 && posCI <= tamanho){
+                return posCI - 1; // a tela comeca em 1, a lista comeca em 0
+            }else{
+                System.out.println("Numero invalido");
+            }
+        }
+    }
+
+    // le um inteiro maior que 0
+    private int lerQuantidade(String rotulo){
+        while (true){
+            int qtdCI = lerInt(rotulo);
+            if(qtdCI > 0){
+                return qtdCI;
+            }else{
+                System.out.println("deve ser maior que 0");
+            }
+        }
+    }
+
+    // le um preco maior que 0
+    private double lerPreco(String rotulo){
+        while (true){
+            double precoCI = lerDouble(rotulo);
+            if(precoCI > 0){
+                return precoCI;
+            }else{
+                System.out.println("deve ser maior que 0");
+            }
+        }
+    }
+
+    // le um desconto entre 0 e 100
+    private double lerDesconto(String rotulo){
+        while (true){
+            double descCI = lerDouble(rotulo);
+            if(descCI >= 0 && descCI <= 100){
+                return descCI;
+            }else{
+                System.out.println("deve ser de 0 a 100");
+            }
         }
     }
 }
