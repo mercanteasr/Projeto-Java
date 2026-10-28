@@ -6,8 +6,8 @@ public class Principal {
         boolean rodando = true;
 
         while (rodando) {
-            System.out.println("\n|== MENU PRINCIPAL==|");
-            System.out.println("1) Cadastre CLientes/Itens");
+            System.out.println("\n|== MENU PRINCIPAL ==|");
+            System.out.println("1) Cadastre Clientes/Itens");
             System.out.println("2) Registre uma venda");
             System.out.println("3) Listar Itens/Clientes/Vendas");
             System.out.println("0) Sair");

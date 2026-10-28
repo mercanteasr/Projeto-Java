@@ -93,8 +93,8 @@ public class Controle {
                 rem = new Remedio();
                 System.out.println("\n== CADASTRO REMEDIO ==");
                 preencherComum(rem);
-                rem.setDosagem(l.entDados("Dosagem (ex: 500mg): "));
-                rem.setPrincipioAtivo(l.entDados("Principio Ativo (ex: dipirona, paracetamol): "));
+                rem.setDosagem(lerTexto("Dosagem (ex: 500mg): "));
+                rem.setPrincipioAtivo(lerTexto("Principio Ativo (ex: dipirona, paracetamol): "));
                 itens.add(rem);
                 System.out.println("Remedio cadastrado com sucesso!");
                 break;
@@ -102,9 +102,9 @@ public class Controle {
                 con = new Controlado();
                 System.out.println("\n== CADASTRO REMEDIO CONTROLADO ==");
                 preencherComum(con);
-                con.setDosagem(l.entDados("Dosagem (ex: 500mg): "));
-                con.setPrincipioAtivo(l.entDados("Principio Ativo (ex: dipirona, paracetamol): "));
-                con.setTarja(l.entDados("Tarja (ex: vermelha/preta): "));
+                con.setDosagem(lerTexto("Dosagem (ex: 500mg): "));
+                con.setPrincipioAtivo(lerTexto("Principio Ativo (ex: dipirona, paracetamol): "));
+                con.setTarja(lerTexto("Tarja (ex: vermelha/preta): "));
                 itens.add(con);
                 System.out.println("Remedio Controlado cadastrado com sucesso!");
                 break;
@@ -112,8 +112,8 @@ public class Controle {
                 cos = new Cosmetico();
                 System.out.println("\n== CADASTRO COSMETICO == ");
                 preencherComum(cos);
-                cos.setFragrancia(l.entDados("Fragrancia (ex: lavanda, sem perfume): "));
-                cos.setTipoPele(l.entDados("Tipo de pele (ex: oleosa/seca/mista/normal): "));
+                cos.setFragrancia(lerTexto("Fragrancia (ex: lavanda, sem perfume): "));
+                cos.setTipoPele(lerTexto("Tipo de pele (ex: oleosa/seca/mista/normal): "));
                 itens.add(cos);
                 System.out.println("Cosmetico cadastrado com sucesso!");
                 break;
@@ -121,7 +121,7 @@ public class Controle {
                 hig = new Higiene();
                 System.out.println("\n== CADASTRO HIGIENE ==");
                 preencherComum(hig);
-                hig.setPublicoAlvo(l.entDados("Publico Alvo (ex: infantil/idoso/adulto): "));
+                hig.setPublicoAlvo(lerTexto("Publico Alvo (ex: infantil/idoso/adulto): "));
                 hig.setUnidadesPorPacote(lerQuantidade("Unidades por Pacote (número inteiro, ex: 12): "));
                 itens.add(hig);
                 System.out.println("Item de Higiene cadastrado com sucesso!");
@@ -131,7 +131,7 @@ public class Controle {
                 System.out.println("\n== CADASTRO APARELHO MEDICO ==");
                 preencherComum(apm);
                 apm.setGarantiaMeses(lerQuantidade("Garantia em Meses (número inteiro, ex: 12): "));
-                apm.setVoltagem(l.entDados("Voltagem (ex: 110V/220V/bivolt): "));
+                apm.setVoltagem(lerTexto("Voltagem (ex: 110V/220V/bivolt): "));
                 itens.add(apm);
                 System.out.println("Aparelho Medico cadastrado com sucesso!");
                 break;
@@ -143,8 +143,8 @@ public class Controle {
 
     // preenche os dados que todo item tem (herdados de ItemFarmacia)
     private void preencherComum(ItemFarmacia item) {
-        item.setNome(l.entDados("Nome do Item: "));
-        item.setMarca(l.entDados("Marca Item: "));
+        item.setNome(lerTexto("Nome do Item: "));
+        item.setMarca(lerTexto("Marca Item: "));
         item.setPreco(lerPreco("Preço (ex: 5.99, use ponto): "));
         item.setQtdEstoque(lerQuantidade("Quantidade Estoque Item (número inteiro, ex: 12): "));
     }
@@ -152,9 +152,9 @@ public class Controle {
     private void cadCliente() {
         Cliente cl = new Cliente();
         System.out.println("\n== CADASTRO CLIENTES ==");
-        cl.setNome(l.entDados("Nome do Cliente: "));
-        cl.setCpf(l.entDados("CPF do Cliente (ex: 111.222.333-44): "));
-        cl.setTelefone(l.entDados("Telefone do Cliente (ex: 43 99999-9999): "));
+        cl.setNome(lerTexto("Nome do Cliente: "));
+        cl.setCpf(lerTexto("CPF do Cliente (ex: 111.222.333-44): "));
+        cl.setTelefone(lerTexto("Telefone do Cliente (ex: 43 99999-9999): "));
         clientes.add(cl);
         System.out.println("Cliente cadastrado com sucesso!");
     }
@@ -178,7 +178,7 @@ public class Controle {
             // so remedio controlado precisa de receita
             if (ven.getItem() instanceof Controlado) {
                 Controlado con = (Controlado) ven.getItem();
-                String aReceita = l.entDados("Apresentou receita? (S/N): ");
+                String aReceita = lerTexto("Apresentou receita? (S/N): ");
                 con.setReceitaApresentada(aReceita.equalsIgnoreCase("S"));
                 verReceita(con);
             }
@@ -259,7 +259,7 @@ public class Controle {
     public int lerInt(String rotulo) {
         while (true) {
             try {
-                return Integer.parseInt(l.entDados(rotulo));
+                return Integer.parseInt(lerTexto(rotulo).trim());
             } catch (NumberFormatException nfe) {
                 System.out.println("Valor invalido, digite apenas numeros!");
             }
@@ -270,7 +270,7 @@ public class Controle {
     private double lerDouble(String rotulo) {
         while (true) {
             try {
-                return Double.parseDouble(l.entDados(rotulo));
+                return Double.parseDouble(lerTexto(rotulo).trim());
             } catch (NumberFormatException nfe) {
                 System.out.println("Valor invalido, digite apenas numeros!");
             }
@@ -321,6 +321,18 @@ public class Controle {
                 return descCI;
             }else{
                 System.out.println("deve ser de 0 a 100");
+            }
+        }
+    }
+    // le um texto
+    private String lerTexto(String rotulo){
+        while (true){
+            String lTex = l.entDados(rotulo).trim();
+            if(lTex.isEmpty()){
+                System.out.println("String vazia, incorreta!");
+            }
+            else {
+                return lTex;
             }
         }
     }

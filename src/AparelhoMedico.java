@@ -27,6 +27,6 @@ public class AparelhoMedico extends ItemFarmacia{
     }
     //Sobrescrita
     public String toString(){
-        return super.toString() + "\n | Voltagem: "+voltagem+" | Garantia Meses: "+garantiaMeses;
+        return super.toString() + "\n | Voltagem: "+voltagem+"\n | Garantia Meses: "+garantiaMeses;
     }
 }
