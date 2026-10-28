@@ -2,8 +2,9 @@
 
 import java.util.ArrayList;
 public class Controle {
-    // Inicialização de Objeto
+    // inicialização de objeto
     private Leitura l = new Leitura();
+    private boolean rodar = true;
 
     private ArrayList<ItemFarmacia> itens;
     private ArrayList<Cliente> clientes;
@@ -25,7 +26,7 @@ public class Controle {
     }
 
     // Metodos
-    public void cadItem() {
+    public void cadItem(){
         Remedio rem;
         Controlado con;
         Cosmetico cos;
@@ -42,7 +43,7 @@ public class Controle {
         switch (op) {
             case 1:
                 rem = new Remedio();
-                System.out.println("== CADASTRO REMEDIO ==");
+                System.out.println("\n== CADASTRO REMEDIO ==");
                 preencherComum(rem);
                 rem.setDosagem(l.entDados("Dosagem (ex: 500mg): "));
                 rem.setPrincipioAtivo(l.entDados("Principio Ativo (ex: dipirona, paracetamol): "));
@@ -51,7 +52,7 @@ public class Controle {
                 break;
             case 2:
                 con = new Controlado();
-                System.out.println("== CADASTRO REMEDIO CONTROLADO ==");
+                System.out.println("\n== CADASTRO REMEDIO CONTROLADO ==");
                 preencherComum(con);
                 con.setDosagem(l.entDados("Dosagem (ex: 500mg): "));
                 con.setPrincipioAtivo(l.entDados("Principio Ativo (ex: dipirona, paracetamol): "));
@@ -61,7 +62,7 @@ public class Controle {
                 break;
             case 3:
                 cos = new Cosmetico();
-                System.out.println("== CADASTRO COSMETICO == ");
+                System.out.println("\n== CADASTRO COSMETICO == ");
                 preencherComum(cos);
                 cos.setFragrancia(l.entDados("Fragrancia (ex: lavanda, sem perfume): "));
                 cos.setTipoPele(l.entDados("Tipo de pele (ex: oleosa/seca/mista/normal): "));
@@ -70,7 +71,7 @@ public class Controle {
                 break;
             case 4:
                 hig = new Higiene();
-                System.out.println("== CADASTRO HIGIENE ==");
+                System.out.println("\n== CADASTRO HIGIENE ==");
                 preencherComum(hig);
                 hig.setPublicoAlvo(l.entDados("Publico Alvo (ex: infantil/idoso/adulto): "));
                 hig.setUnidadesPorPacote(lerQuantidade("Unidades por Pacote (número inteiro, ex: 12): "));
@@ -79,7 +80,7 @@ public class Controle {
                 break;
             case 5:
                 apm = new AparelhoMedico();
-                System.out.println("== CADASTRO APARELHO MEDICO ==");
+                System.out.println("\n== CADASTRO APARELHO MEDICO ==");
                 preencherComum(apm);
                 apm.setGarantiaMeses(lerQuantidade("Garantia em Meses (número inteiro, ex: 12): "));
                 apm.setVoltagem(l.entDados("Voltagem (ex: 110V/220V/bivolt): "));
@@ -94,13 +95,14 @@ public class Controle {
 
     public void cadCliente() {
         Cliente cl = new Cliente();
-        System.out.println("== CADASTRO CLIENTES ==");
+        System.out.println("\n== CADASTRO CLIENTES ==");
         cl.setNome(l.entDados("Nome do Cliente: "));
         cl.setCpf(l.entDados("CPF do Cliente (ex: 111.222.333-44): "));
         cl.setTelefone(l.entDados("Telefone do Cliente (ex: 43 99999-9999): "));
         clientes.add(cl);
         System.out.println("Cliente cadastrado com sucesso!");
     }
+
     // Metodo auxiliar pra leitura de número com tratamento
     public int lerPosicao(String rotulo, int tamanho){
         while (true){
@@ -215,9 +217,9 @@ public class Controle {
             System.out.println("Cadastre um item antes de ver a lista de itens");
             return; // sai do metodo
         }
-        System.out.println("== LISTA DE ITENS ==");
+        System.out.println("\n== LISTA DE ITENS ==");
         for (int i = 0; i < itens.size(); i++) {
-            System.out.println("Item numero " + (i + 1));
+            System.out.println("\nItem numero " + (i + 1));
             System.out.println(itens.get(i).toString()+"\n");
         }
     }
@@ -226,9 +228,9 @@ public class Controle {
             System.out.println("Cadastre um cliente antes de ver a lista de clientes");
             return; // sai do metodo
         }
-        System.out.println("== LISTA DE CLIENTES ==");
+        System.out.println("\n== LISTA DE CLIENTES ==");
         for (int i = 0; i < clientes.size(); i++) {
-            System.out.println("Cliente numero " + (i + 1));
+            System.out.println("\nCliente numero " + (i + 1));
             System.out.println("NOME: " + clientes.get(i).getNome());
             System.out.println("CPF: " + clientes.get(i).getCpf());
             System.out.println("TELEFONE: " + clientes.get(i).getTelefone());
@@ -240,13 +242,59 @@ public class Controle {
             System.out.println("Registre uma venda antes de ver a lista de vendas");
             return; // sai do metodo
         }
-        System.out.println("== LISTA DE VENDAS ==");
+        System.out.println("\n== LISTA DE VENDAS ==");
         for (int i = 0; i < vendas.size(); i++) {
-            System.out.println("Venda numero: " + (i + 1));
+            System.out.println("\nVenda numero: " + (i + 1));
             System.out.println("Nome Cliente: " + vendas.get(i).getCliente().getNome()); //Reflexividade
             System.out.println("Item: " + vendas.get(i).getItem().getNome()); //Reflexividade
             System.out.println("Quantidade de Itens vendidos: " + vendas.get(i).getQuantidade());
             System.out.format("Total da venda: %.2f%n", vendas.get(i).calcTotal());
+        }
+    }
+
+    // Metodo do menu listar
+    public void listar(){
+        System.out.println("\n== MENU DE ESCOLHA DE LISTAS == ");
+        System.out.println("1) Clientes");
+        System.out.println("2) Itens");
+        System.out.println("3) Vendas");
+        int opcao = lerInt("Opção: ");
+
+        switch (opcao){
+            case 1:
+                listarClientes();
+                break;
+            case 2:
+                listarItens();
+                break;
+            case 3:
+                listarVendas();
+                break;
+            default:
+                System.out.println("Digite um numero correspondente ao menu acima!");
+                break;
+        }
+    }
+
+    public void cadastrar(){
+        System.out.println("\n== MENU DE CADASTRO== ");
+        System.out.println("1) Cadastro Cliente");
+        System.out.println("2) Cadastro Item");
+        int opcao = lerInt("Opção: ");
+
+        switch (opcao){
+            case 0:
+                System.out.println("Saindo...");
+                return;
+            case 1:
+                cadCliente();
+                break;
+            case 2:
+                cadItem();
+                break;
+            default:
+                System.out.println("Digite um numero correspondente ao menu acima!");
+                break;
         }
     }
 }
